@@ -2,46 +2,37 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from '@abacritt/angularx-social-login';
-import { SignupComponent } from './sign-up/sign-up.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SignupComponent } from './components/sign-up/sign-up.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SocialLoginModule
+    MatToolbarModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    provideAuth(() => getAuth())
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('http://216579780925-ljolimtulpfavasn29j1qpm9phnefe9b.apps.googleusercontent.com')
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('http://216579780925-ljolimtulpfavasn29j1qpm9phnefe9b.apps.googleusercontent.com')
-          }
-        ], onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 
