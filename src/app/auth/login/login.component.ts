@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
       this.loading = false;
-      this.router.navigate(['/'])
+      this.router.navigate(['/dashboard'])
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
     this.afAuth.signInWithPopup( new GoogleAuthProvider).then((user) => {
       this.loading = false;
       this.toastr.success('User has been successfully logged in with Google', 'User registered');
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
+      console.log(user.user);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -67,7 +68,8 @@ export class LoginComponent implements OnInit {
     this.afAuth.signInWithPopup( new FacebookAuthProvider).then((user) => {
       this.loading = false;
       this.toastr.success('The user has been successfully logged in with Facebook', 'User registered');
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
+      console.log(user.user);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -81,7 +83,8 @@ export class LoginComponent implements OnInit {
     this.afAuth.signInWithPopup( new TwitterAuthProvider).then((user) => {
       this.loading = false;
       this.toastr.success('User has been successfully logged in with Twitter', 'User registered');
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
+      console.log(user.user);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -95,7 +98,8 @@ export class LoginComponent implements OnInit {
     this.afAuth.signInWithPopup( new GithubAuthProvider).then((user) => {
       this.loading = false;
       this.toastr.success('User has been successfully logged in with GitHub', 'User registered.');
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
+      console.log(user.user);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
