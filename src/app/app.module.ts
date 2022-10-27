@@ -18,7 +18,6 @@ import { AuthRoutingModule } from './auth/auth-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthRoutingModule,
     BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,

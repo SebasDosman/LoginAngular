@@ -10,24 +10,22 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { LoadingComponent } from './loading/loading.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignupComponent,
     ResetPasswordComponent,
-    LoadingComponent,
-    NavbarComponent
+    LoadingComponent
   ],
   imports: [
-    CommonModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
-    BrowserModule,
     RouterModule,
+    CommonModule,
+    AuthRoutingModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     provideAuth(() => getAuth())

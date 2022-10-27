@@ -4,7 +4,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
-import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, TwitterAuthProvider } from '@angular/fire/auth';
+import { AuthService } from '../../services/auth.service';
+import { GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'login',
@@ -13,15 +15,17 @@ import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider, TwitterAu
 })
 
 export class LoginComponent implements OnInit {
+  
   loading : boolean = false;
   userLogin : FormGroup;
 
   constructor(
-    private afAuth : AngularFireAuth,
-    private fb : FormBuilder,
-    private toastr : ToastrService,
-    private router : Router,
+    private afAuth        : AngularFireAuth ,
+    private fb            : FormBuilder     ,
+    private toastr        : ToastrService   ,
+    private router        : Router          ,
     private FireBaseError : FirebaseErrorService,
+    private authServ      : AuthService
   ) {
     this.userLogin = this.fb.group({
       email : ['', Validators.required],
@@ -33,77 +37,41 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
-    const email = this.userLogin.value.email;
-    const password = this.userLogin.value.password;
+    const email     = this.userLogin.value.email    ;
+    const password  = this.userLogin.value.password ;
+
+    
 
     this.loading = true;
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
+      
       this.loading = false;
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['/usuario/dashboard'])
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
-      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
+      
+      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error');
       this.loading = false;
     })
   }
 
   signInWithGoogle() {
     this.loading = true;
-
-    this.afAuth.signInWithPopup( new GoogleAuthProvider).then((user) => {
-      this.loading = false;
-      this.toastr.success('User has been successfully logged in with Google', 'User registered');
-      this.router.navigate(['/dashboard']);
-      console.log(user.user);
-      localStorage.setItem('token', JSON.stringify(user.user?.uid));
-    }).catch((error) => {
-      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
-      this.loading = false;
-    })
+    this.loading = this.authServ.signInGoogle( );
   }
 
   signInWithFacebook() {
     this.loading = true;
-
-    this.afAuth.signInWithPopup( new FacebookAuthProvider).then((user) => {
-      this.loading = false;
-      this.toastr.success('The user has been successfully logged in with Facebook', 'User registered');
-      this.router.navigate(['/dashboard']);
-      console.log(user.user);
-      localStorage.setItem('token', JSON.stringify(user.user?.uid));
-    }).catch((error) => {
-      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
-      this.loading = false;
-    })
+    this.loading = this.authServ.signInFacebook( );
   }
 
   signInWithTwitter() {
     this.loading = true;
-
-    this.afAuth.signInWithPopup( new TwitterAuthProvider).then((user) => {
-      this.loading = false;
-      this.toastr.success('User has been successfully logged in with Twitter', 'User registered');
-      this.router.navigate(['/dashboard']);
-      console.log(user.user);
-      localStorage.setItem('token', JSON.stringify(user.user?.uid));
-    }).catch((error) => {
-      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
-      this.loading = false;
-    })
+    this.loading = this.authServ.signInTwitter();
   }
 
   signInWithGithub() {
     this.loading = true;
-
-    this.afAuth.signInWithPopup( new GithubAuthProvider).then((user) => {
-      this.loading = false;
-      this.toastr.success('User has been successfully logged in with GitHub', 'User registered.');
-      this.router.navigate(['/dashboard']);
-      console.log(user.user);
-      localStorage.setItem('token', JSON.stringify(user.user?.uid));
-    }).catch((error) => {
-      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
-      this.loading = false;
-    })
+    this.loading = this.authServ.signInGithub();
   }
 }

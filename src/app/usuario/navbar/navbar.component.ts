@@ -13,20 +13,26 @@ export class NavbarComponent implements OnInit {
 
   constructor(private afauth : AngularFireAuth, private router : Router) { }
 
+
   ngOnInit(): void {
-    this.afauth.currentUser.then(user => {
-      if (user && user.emailVerified) {
+
+    this.mostrarDataUsuario();
+    
+  }
+
+
+
+  mostrarDataUsuario(){
+
+    this.afauth.currentUser.then( (user: any) => {
+      
+      console.log( user );
+      if( user ){
+        
         this.dataUser = user;
-        console.log(user.email)
-      } else if (user && user.email) {
-        this.dataUser = user.email;
-        console.log(user.displayName)
-      } else if (user && user.photoURL) {
-        this.dataUser = user;
-        console.log(user.photoURL)
-      } else {
-        this.router.navigate(['/login']);
+        console.log( this.dataUser.email )
       }
+        // this.router.navigate(['/login']);
     })
   }
 }

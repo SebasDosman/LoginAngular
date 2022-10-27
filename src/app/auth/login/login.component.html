@@ -10,12 +10,12 @@
             ">
           <div class="card-body p-5 shadow-5 text-center">
             <h2 class="fw-bold mb-5">Sign In</h2>
-            <form [formGroup]="userLogin" (ngSubmit)="signIn()">
+            <form [formGroup]="userLogin">
               <!-- Email input -->
               <div class="form-outline mb-4">
                 <div class="input-group">
                   <span class="input-group-text" id="basic-addon1">@</span>
-                  <input type="email" id="form3Example3" class="form-control" />
+                  <input type="email" id="form3Example3" class="form-control" formControlName="email"/>
                 </div>
                 <label class="form-label" for="form3Example3">Email address</label>
               </div>
@@ -28,7 +28,7 @@
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
                     </svg>
                   </span>
-                  <input type="password" id="form3Example4" class="form-control" />
+                  <input type="password" id="form3Example4" class="form-control" formControlName="password"/>
                 </div>
                 <label class="form-label" for="form3Example4">Password</label>
               </div>
@@ -42,7 +42,7 @@
               </div>
 
               <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4">
+              <button type="submit" class="btn btn-primary btn-block mb-4" (click)="signIn()">
                 Sign in
               </button>
 
