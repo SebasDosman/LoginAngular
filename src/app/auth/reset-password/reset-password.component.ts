@@ -37,7 +37,8 @@ export class ResetPasswordComponent implements OnInit {
     this.loading = true;
     this.afAuth.sendPasswordResetEmail(email).then(() => {
       this.toastr.info('We have sent you an email to reset your password', 'Recover Password')
-      this.router.navigate(['/login']);
+      
+      this.router.navigate(['/auth/login']);
     }).catch((error) => {
       this.loading = false;
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
