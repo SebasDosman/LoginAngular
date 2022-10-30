@@ -11,15 +11,13 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   dataUser : any;
 
-  constructor(private afauth : AngularFireAuth, private router : Router) { }
+  constructor( private afauth : AngularFireAuth, private router : Router) { }
 
 
   ngOnInit(): void {
 
     this.mostrarDataUsuario();
-    
   }
-
 
 
   mostrarDataUsuario(){
@@ -32,7 +30,11 @@ export class NavbarComponent implements OnInit {
         this.dataUser = user;
         console.log( this.dataUser.email )
       }
-        // this.router.navigate(['/login']);
     })
+  }
+
+
+  signOut(){
+    this.afauth.signOut();
   }
 }

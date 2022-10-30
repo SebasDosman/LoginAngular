@@ -16,23 +16,27 @@ export class UserVigilantGuardGuard implements CanActivate {
 
   }
 
-
-  redirect(){
-    this.valorRetorno = false;
-    this.router.navigateByUrl("/auth");
-  }
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-      this.afauth.currentUser.then( (user: any) => {
-      
-        if( user ) this.valorRetorno = true;
-        else this.valorRetorno = false;
-      })
-      return this.valorRetorno;
-
+        return this.goToDashboard()
   }
-  
+
+
+  goToDashboard(): boolean{
+    this.afauth.currentUser.then( (user: any) => {
+      
+      
+      if( user ) {
+        this.valorRetorno = true;
+        this.router.navigate(['/usuario/dashboard']);
+      }
+      else{
+         this.valorRetorno = false;
+
+      }
+    })
+    return this.valorRetorno;
+  }
 }

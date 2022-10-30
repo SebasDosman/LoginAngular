@@ -47,15 +47,17 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
       
-      this.loading = false;
-      this.router.navigate(['/usuario/dashboard'])
+
+      this.router.navigate(['/usuario/dashboard']);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
+      this.loading = false;
     }).catch((error) => {
       
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error');
       this.loading = false;
     })
   }
+
 
   signInWithGoogle() {
     this.loading = true;
@@ -76,4 +78,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.loading = this.authServ.signInGithub();
   }
+
+
 }

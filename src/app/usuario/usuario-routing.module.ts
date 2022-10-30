@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CrearUsuarioComponent } from './componentesUsuario/crear-usuario/crear-usuario.component';
+import { LeerUsuarioComponent } from './componentesUsuario/leer-usuario/leer-usuario.component';
+import { ActualizarUsuarioComponent } from './componentesUsuario/actualizar-usuario/actualizar-usuario.component';
+import { EliminarUsuarioComponent } from './componentesUsuario/eliminar-usuario/eliminar-usuario.component';
 
 const routes: Routes = [{
 
   path: '',
+  component: DashboardComponent,
   children: [
-    { path: 'dashboard', component: NavbarComponent },
-    { path: '**', redirectTo: 'dashboard'}
+    { path: 'crearUsuario'      , component : CrearUsuarioComponent       },
+    { path: 'leerUsuario'       , component : LeerUsuarioComponent        },
+    { path: 'actualizarUsuario' , component : ActualizarUsuarioComponent  },
+    { path: 'eliminarUsuario'   , component : EliminarUsuarioComponent    },
+    { path: '**'                , redirectTo: 'crearUsuario'}
   ]
 }];
 

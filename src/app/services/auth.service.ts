@@ -24,39 +24,38 @@ export class AuthService {
 
     signInGoogle(){
 
-      return this.signInWithPopUp( new GoogleAuthProvider);
+      this.signInWithPopUp( new GoogleAuthProvider);
+      return false;
     }
 
     signInTwitter(){
-      return this.signInWithPopUp( new TwitterAuthProvider );
+      this.signInWithPopUp( new TwitterAuthProvider );
+      return false;
     }
 
     signInFacebook(){
-      return  this.signInWithPopUp( new FacebookAuthProvider );
+      this.signInWithPopUp( new FacebookAuthProvider );
+      return false;
     }
 
     signInGithub(){
-      return this.signInWithPopUp( new GithubAuthProvider );
+      this.signInWithPopUp( new GithubAuthProvider );
+      return false;
     }
 
 
-    signInWithPopUp( provider: any ): any {
+    signInWithPopUp( provider: any ){
 
       this.afAuth.signInWithPopup( provider )
       .then((user) => {
-          this.toastr.success('User has been successfully logged in with Google', 'User registered');
+        this.toastr.success('User has been successfully logged in with Google', 'User registered');
         console.log(user.user);
 
+        this.router.navigateByUrl("/usuario/dashboard");
         localStorage.setItem('token', JSON.stringify(user.user?.uid));
-        this.router.navigate(['/usuario/dashboard']);
-        return false; 
       })
       .catch((error) => {
         this.toastr.error(this.FireBaseError.codeError(error.code), 'Error');
-        return false; 
       })
     }
-
-
-
 }
