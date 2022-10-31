@@ -18,7 +18,6 @@ button{
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: beige;
 }
 
 .opcionesButtons{
