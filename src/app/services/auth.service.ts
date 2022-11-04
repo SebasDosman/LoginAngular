@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import { Router, UrlSegment } from '@angular/router';
 import { GoogleAuthProvider } from 'firebase/auth';
 
 
@@ -15,10 +15,13 @@ import { TwitterAuthProvider, FacebookAuthProvider, GithubAuthProvider } from '@
 })
 export class AuthService {
 
+
+  emailUsuarioActivo: string;
   constructor(  private router : Router                     ,
                 private toastr : ToastrService              ,
                 private afAuth : AngularFireAuth            ,
-                private FireBaseError : FirebaseErrorService
+                private FireBaseError : FirebaseErrorService,
+                private afauth : AngularFireAuth
                 ) { }
 
 
@@ -57,5 +60,18 @@ export class AuthService {
       .catch((error) => {
         this.toastr.error(this.FireBaseError.codeError(error.code), 'Error');
       })
+    }
+
+
+    async getCurrentUserEmail(): Promise<string>{
+
+      //Obtenemos el email de el usuario conectado en la variable emailUsuarioActivo
+      await this.afauth.currentUser
+      .then( (user: any) => {
+        this.emailUsuarioActivo = user.email;
+      })
+      .catch( err => console.log( err ));
+
+      return this.emailUsuarioActivo;
     }
 }

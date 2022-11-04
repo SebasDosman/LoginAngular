@@ -1,6 +1,7 @@
 <div class="contenedor">
-  
-    <form class="formularioCrearUser" [formGroup]="formularioCrearUser">
+    <h1>Actualizar usuario</h1>
+
+    <form class="formularioCrearUser" [formGroup]="formularioActualizarUser">
 
         <input  class="nombre" 
                 placeholder="Nombre"
@@ -23,14 +24,14 @@
                 placeholder="Direccion"
                 formControlName="direccion">                
 
-        <input  class="email" 
-                placeholder="email"
-                formControlName="email">
         
         <input  class="contrasena"  
                 placeholder="Contraseña"
                 formControlName="password">
 
+
+
+        
 
         <input  type="file"
                 formControlName="imagen"
@@ -39,6 +40,13 @@
 
        
     </form>
-    <button (click)="enviarData()">Enviar</button>
+
+    <a  class="buttonImg"
+        target="_blanck"
+        [href]="usuario?.imagen"
+        download
+        >
+        Descargar imagen antigua para reutilizar</a>
+    <button class ="actualizar" (click)="actualizarData()">Actualizar</button>
 
 </div>

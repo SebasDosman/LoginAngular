@@ -10,6 +10,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { AuthRoutingModule } from './auth/auth-routing.module';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideStorage(() => getStorage()),
+    provideDatabase(() => getDatabase())
   ],
   providers: [],
   bootstrap: [AppComponent]

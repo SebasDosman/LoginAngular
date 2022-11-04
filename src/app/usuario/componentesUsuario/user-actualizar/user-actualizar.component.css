@@ -20,7 +20,7 @@
 
   align-items: center;
   justify-content: space-around;
-  height: 350px;
+  height: 450px;
   width: 80%;
 }
 
@@ -29,8 +29,13 @@ input{
   height: 40px;
 }
 
-button{
+.actualizar{
+
   width: 100px;
   height: 30px;
+  
 }
 
+.buttonImg{
+    cursor: pointer;
+}
