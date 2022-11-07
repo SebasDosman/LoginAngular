@@ -3,6 +3,7 @@ import { user } from 'src/app/interfaces/userInterface';
 
 import { onValue } from '@angular/fire/database';
 import { DbServiceService } from '../../../services/db-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-eliminar-usuario',
@@ -11,7 +12,8 @@ import { DbServiceService } from '../../../services/db-service.service';
 })
 export class EliminarUsuarioComponent implements OnInit {
 
-  constructor( private dbServ: DbServiceService ) { }
+  constructor(  private dbServ: DbServiceService,
+                private router: Router ) { }
 
 
   usuariosActivos: user[];
@@ -20,9 +22,11 @@ export class EliminarUsuarioComponent implements OnInit {
     this.obtenerDataDb();
   }
 
-  borrarUsuario( index: number ){
+  async borrarUsuario( index: number ){
     const usuario = this.usuariosActivos[ index ];
-    this.dbServ.deleteUser( usuario.email );
+    await this.dbServ.deleteUser( usuario.telefono + "" );
+
+    this.router.navigateByUrl('/usuario', {skipLocationChange: true}).then(()=> this.router.navigate(["/usuario/eliminarUsuario"]));
   }
 
   

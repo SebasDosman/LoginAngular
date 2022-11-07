@@ -8,7 +8,6 @@ export interface user{
     edad        : number,
     telefono    : number,
     direccion   : string,
-    password    : string,
     imagen      : string,
     creador     : string
 }

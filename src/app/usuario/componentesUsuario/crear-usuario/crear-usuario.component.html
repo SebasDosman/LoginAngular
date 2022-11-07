@@ -1,5 +1,6 @@
 <div class="contenedor">
-  
+        
+        <span *ngIf="invalidForm">Todos los campos son obligatorios y el correo debe ser valido</span>
     <form class="formularioCrearUser" [formGroup]="formularioCrearUser">
 
         <input  class="nombre" 
@@ -26,10 +27,6 @@
         <input  class="email" 
                 placeholder="email"
                 formControlName="email">
-        
-        <input  class="contrasena"  
-                placeholder="Contraseña"
-                formControlName="password">
 
 
         <input  type="file"

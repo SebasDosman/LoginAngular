@@ -1,9 +1,11 @@
 <div class="container">
-  <div class="table-wrapper">
+  <h1 *ngIf="usuariosActivos == undefined">There are no users</h1>
+
+  <div *ngIf="usuariosActivos != undefined"  class="table-wrapper">
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Manage <b>Employees</b></h2>
+          <h2>Delete <b>Users</b></h2>
         </div>
       </div>
     </div>

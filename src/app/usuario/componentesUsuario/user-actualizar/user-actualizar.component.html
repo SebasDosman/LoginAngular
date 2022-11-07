@@ -1,6 +1,6 @@
 <div class="contenedor">
     <h1>Actualizar usuario</h1>
-
+    <span *ngIf="invalidForm">Todos los campos son obligatorios</span>
     <form class="formularioCrearUser" [formGroup]="formularioActualizarUser">
 
         <input  class="nombre" 
@@ -24,10 +24,6 @@
                 placeholder="Direccion"
                 formControlName="direccion">                
 
-        
-        <input  class="contrasena"  
-                placeholder="Contraseña"
-                formControlName="password">
 
 
 

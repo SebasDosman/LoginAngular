@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
+  recarga: number = 0;
   constructor(  private afauth : AngularFireAuth, private router: Router ) { }
 
   redireccionarSiNoExiste(){
@@ -19,7 +20,6 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     this.redireccionarSiNoExiste();
   }
 

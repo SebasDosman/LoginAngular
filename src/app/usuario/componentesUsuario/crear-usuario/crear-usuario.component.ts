@@ -15,7 +15,7 @@ export class CrearUsuarioComponent implements OnInit {
 
   $eventos  : any;
   urlImagen : string;
-
+  invalidForm: boolean = false;
 
   constructor(  private fb      : FormBuilder     ,
                 private storage : Storage         ,
@@ -30,6 +30,8 @@ export class CrearUsuarioComponent implements OnInit {
   
   
   ngOnInit(): void {
+
+
   }
 
   formularioCrearUser:FormGroup = this.fb.group({
@@ -39,24 +41,28 @@ export class CrearUsuarioComponent implements OnInit {
     edad      : [ , Validators.required ],
     telefono  : [ , Validators.required ],
     direccion : [ , Validators.required ],
-    password  : [ , Validators.required ],
-    email     : [ , Validators.required ],
+    email     : [ , [ Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")] ],
     imagen    : [ , Validators.required ]
   })
+
+
 
 
   async enviarData(){
     
     if( this.formularioCrearUser.valid ){
 
+      this.invalidForm = false;
       let infoUser: user = this.formularioCrearUser.value;
       infoUser.creador = await this.authServ.getCurrentUserEmail();
-
       this.subirImagen(  infoUser );
+    }
+    else{
+      this.invalidForm = true;
     }
   }
 
-
+  
 
   onUpload( e: any ){
     this.$eventos = e;
@@ -73,12 +79,27 @@ export class CrearUsuarioComponent implements OnInit {
     this.storServ.subirImages( imgRef, file );
     this.urlImagen = await this.storServ.getImages( file.name );
     this.subirUsuario( infoUser );
+    
   }
 
 
-  subirUsuario( infoUser: user ){
+  async subirUsuario( infoUser: user ){
     
     infoUser.imagen = this.urlImagen;
-    this.dbServ.crearUsuario( infoUser );
+    await this.dbServ.crearUsuario( infoUser );
+    this.reiniciarForm();
   };
+
+  reiniciarForm(){
+    this.formularioCrearUser.setValue({
+      nombre: null,
+      apellido: null,
+      edad: null, 
+      telefono: null,
+      direccion: null,
+      email: null,
+      imagen: null
+    })
+  }
+
 }

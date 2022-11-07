@@ -4,6 +4,7 @@ import { Database, set, ref,   onValue } from '@angular/fire/database';
 import { deleteUser } from 'firebase/auth';
 import { remove, update } from 'firebase/database';
 import { user } from '../interfaces/userInterface';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,12 @@ import { user } from '../interfaces/userInterface';
 export class DbServiceService {
 
   dataUsers: any;
-  constructor( private database: Database) { }
+  constructor(  private database: Database,
+                private toast: ToastrService ) { }
 
-  crearUsuario( value: user ){
-    set( ref( this.database, 'users/' + value.email), value );
+  async crearUsuario( value: user ){
+    await set( ref( this.database, 'users/' + value.telefono ), value );
+    this.toast.success("Usuario creado correctamente");
   }
 
   obtenerUsuarios(){
@@ -27,10 +30,12 @@ export class DbServiceService {
 
   async actualizarUsuario( value: user , path: string){
     await update( ref( this.database, 'users/' + path  ), value );
+    this.toast.success("Usuario actualizado correctamente");
   }
 
 
-  deleteUser( path: string ){
-    remove( ref( this.database, 'users/' + path ) );
+  async deleteUser( path: string ){
+    await remove( ref( this.database, 'users/' + path ) );
+    this.toast.success("Usuario eliminado correctamente")
   }
 };

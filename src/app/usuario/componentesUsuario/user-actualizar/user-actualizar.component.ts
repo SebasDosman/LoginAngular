@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserActualizarComponent implements OnInit {
 
+  invalidForm: boolean = false;
   usuario: user | null;
   $eventos  : any;
   urlImagen: string;
@@ -51,7 +52,6 @@ export class UserActualizarComponent implements OnInit {
     edad        : [ , Validators.required ],
     telefono    : [ , Validators.required ],
     direccion   : [ , Validators.required ],
-    password    : [ , Validators.required ],
     imagen      : [ , Validators.required ]
   })
 
@@ -62,15 +62,18 @@ export class UserActualizarComponent implements OnInit {
 
     if( this.formularioActualizarUser.valid  ){
 
+      this.invalidForm = false;
       if( this.usuario != null  ) {
 
         await this.subirImagen( this.usuario );        
-        const email= this.usuario!.email;
+        const telefono = this.usuario!.telefono;
 
         this.asignarValoresAUsuario();
-        await this.dbServ.actualizarUsuario( this.usuario,  email  );
+        await this.dbServ.actualizarUsuario( this.usuario,  telefono + ""  );
         this.router.navigateByUrl("/usuario/actualizarUsuario");
       }
+    } else{
+      this.invalidForm = true;
     }
     
   }
@@ -89,7 +92,6 @@ export class UserActualizarComponent implements OnInit {
         edad          : this.usuario.edad,
         telefono      : this.usuario.telefono,
         direccion     : this.usuario.direccion,
-        password      : this.usuario.password,
         imagen        : "",
       });
     }
@@ -114,7 +116,6 @@ export class UserActualizarComponent implements OnInit {
     this.usuario!.edad      = this.formularioActualizarUser.value.edad      ;
     this.usuario!.telefono  = this.formularioActualizarUser.value.telefono  ;
     this.usuario!.direccion = this.formularioActualizarUser.value.direccion ;
-    this.usuario!.password  = this.formularioActualizarUser.value.password  ;
     this.usuario!.imagen    = this.urlImagen;
   }
 }

@@ -33,6 +33,7 @@ export class UserVigilantGuardGuard implements CanActivate {
         this.router.navigate(['/usuario/dashboard']);
       }
       else{
+        this.router.navigateByUrl('/auth/login')
          this.valorRetorno = false;
 
       }
