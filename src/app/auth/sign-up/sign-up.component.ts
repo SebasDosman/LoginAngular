@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
 import { AuthService } from '../../services/auth.service';
+import { user } from '../../interfaces/userInterface';
 
 @Component({
   selector: 'sign-up',
@@ -65,16 +66,29 @@ export class SignupComponent implements OnInit {
 
     this.loading = true;
 
-    this.afAuth.createUserWithEmailAndPassword(email, password).then(() => {
+    this.afAuth.createUserWithEmailAndPassword(email, password).then(( user ) => {
       this.loading = false;
       this.toastr.success('The user has been successfully registered!', 'Registered User');
-      this.toastr.info('We have sent you a verification email, please check it before logging in', 'Verify Mail')
-      this.router.navigate(['/login']);
+      
+      this.sendEmailVerification( user.user );
+
     }).catch((error) => {
       this.loading = false;
       this.toastr.error(this.FireBaseErrorService.codeError(error.code), 'Error')
     })
   }
 
+
+
   
+  sendEmailVerification( user: any ){
+    user.sendEmailVerification().then( ( res: any ) =>{
+      this.toastr.info('We have sent you a verification email, please check it before logging in', 'Verify Mail')
+      this.router.navigate(['/login'])
+    })
+    .catch( (err: any) =>{
+      this.toastr.error("Error sending verification email, please try again", 'Verify Mail error')
+     })
+  }
+
 }

@@ -52,7 +52,7 @@ export class AuthService {
 
       this.afAuth.signInWithPopup( provider )
       .then((user) => {
-        this.toastr.success('User has been successfully logged in with Google', 'User registered');
+        this.toastr.success('User has been successfully logged', 'User registered');
         console.log(user.user);
 
         this.router.navigateByUrl("/usuario/dashboard");
@@ -75,10 +75,4 @@ export class AuthService {
 
       return this.emailUsuarioActivo;
     }
-
-
-
-    //Validaciones 
-
-
 }
