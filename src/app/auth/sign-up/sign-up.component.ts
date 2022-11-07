@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../services/firebase-error.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'sign-up',
@@ -16,31 +17,51 @@ export class SignupComponent implements OnInit {
   loading : boolean = false;
 
   constructor(
-    private fb : FormBuilder,
-    private afAuth : AngularFireAuth,
-    private toastr : ToastrService,
-    private router : Router,
-    private FireBaseErrorService : FirebaseErrorService
+    private fb      : FormBuilder,
+    private afAuth  : AngularFireAuth,
+    private toastr  : ToastrService,
+    private router  : Router,
+    private FireBaseErrorService : FirebaseErrorService,
+    private authServ: AuthService,
   ) {
+
     this.registerUser = this.fb.group({
       email : ['', [Validators.required, Validators.email]],
-      password : ['', [Validators.required, Validators.minLength(7)]],
+      password : [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
+         ] ],
       repeatPassword : ['', Validators.required],
     })
   }
 
+
+
   ngOnInit(): void {
   }
+
+
+
 
   signUp() {
     const email = this.registerUser.value.email;
     const password = this.registerUser.value.password;
     const repeatPassword = this.registerUser.value.repeatPassword;
 
+
+    if( !this.registerUser.controls['password'].valid ){
+      this.toastr.error('The password must have at least one special character ( $@$!%*?& ), one uppercase letter, one number and at least eight characters')
+      return;
+    }
+
     if (password != repeatPassword) {
       this.toastr.error('Passwords must be the same', 'Error')
       return;
     }
+
+
 
     this.loading = true;
 
@@ -54,4 +75,6 @@ export class SignupComponent implements OnInit {
       this.toastr.error(this.FireBaseErrorService.codeError(error.code), 'Error')
     })
   }
+
+  
 }

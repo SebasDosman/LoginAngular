@@ -10,6 +10,7 @@ import { FirebaseErrorService } from './firebase-error.service';
 import { TwitterAuthProvider, FacebookAuthProvider, GithubAuthProvider } from '@angular/fire/auth';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -74,4 +75,10 @@ export class AuthService {
 
       return this.emailUsuarioActivo;
     }
+
+
+
+    //Validaciones 
+
+
 }
