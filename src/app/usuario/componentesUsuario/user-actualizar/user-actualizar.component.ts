@@ -66,10 +66,10 @@ export class UserActualizarComponent implements OnInit {
       if( this.usuario != null  ) {
 
         await this.subirImagen( this.usuario );        
-        const telefono = this.usuario!.telefono;
+        const email = this.usuario!.email;
 
         this.asignarValoresAUsuario();
-        await this.dbServ.actualizarUsuario( this.usuario,  telefono + ""  );
+        await this.dbServ.actualizarUsuario( this.usuario,  email.split('@')[0] + ""  );
         this.router.navigateByUrl("/usuario/actualizarUsuario");
       }
     } else{

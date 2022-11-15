@@ -16,8 +16,8 @@ export class DbServiceService {
                 private toast: ToastrService ) { }
 
   async crearUsuario( value: user ){
-    await set( ref( this.database, 'users/' + value.telefono ), value );
-    this.toast.success("Usuario creado correctamente");
+    await set( ref( this.database, 'users/' + ( value.email).split('@')[0] ) , value );
+    this.toast.success("User successfully created");
   }
 
   obtenerUsuarios(){
@@ -30,12 +30,12 @@ export class DbServiceService {
 
   async actualizarUsuario( value: user , path: string){
     await update( ref( this.database, 'users/' + path  ), value );
-    this.toast.success("Usuario actualizado correctamente");
+    this.toast.success("User updated correctly");
   }
 
 
   async deleteUser( path: string ){
     await remove( ref( this.database, 'users/' + path ) );
-    this.toast.success("Usuario eliminado correctamente")
+    this.toast.success("User successfully deleted")
   }
 };

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
+i {
+  cursor:pointer;
+}
+
 .container {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 13px;

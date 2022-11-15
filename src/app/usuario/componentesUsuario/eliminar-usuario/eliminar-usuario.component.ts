@@ -24,7 +24,7 @@ export class EliminarUsuarioComponent implements OnInit {
 
   async borrarUsuario( index: number ){
     const usuario = this.usuariosActivos[ index ];
-    await this.dbServ.deleteUser( usuario.telefono + "" );
+    await this.dbServ.deleteUser( usuario.email.split('@')[0] + "" + "" );
 
     this.router.navigateByUrl('/usuario', {skipLocationChange: true}).then(()=> this.router.navigate(["/usuario/eliminarUsuario"]));
   }
