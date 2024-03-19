@@ -7,8 +7,8 @@ This project is an Angular application that uses Firebase and Bootstrap to provi
 - Scalability: The application is designed to be robust and scalable, thanks to the use of Angular, Firebase, and Bootstrap.
 
 ## Installation
-1. Clone the repository: `git clone https://github.com/yourusername/yourrepository.git`
-2. Navigate to the project directory: `cd yourrepository`
+1. Clone the repository: `git clone https://github.com/SebasDosman/users_crud_app.git`
+2. Navigate to the project directory: `cd users_crud_app`
 3. Install the dependencies: `npm install`
 4. Start the server: `ng serve`
 Open `http://localhost:4200/` in your browser.
